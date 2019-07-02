@@ -1,0 +1,29 @@
+{
+  "name": "lashon",
+  "version": "1.0.0",
+  "description": "A neural network to learn the Biblical text",
+  "main": "bibl.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theonize/lashon.git"
+  },
+  "keywords": [
+    "neural",
+    "network",
+    "machine",
+    "learning",
+    "bible"
+  ],
+  "author": "fingerskier",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/theonize/lashon/issues"
+  },
+  "homepage": "https://github.com/theonize/lashon#readme",
+  "dependencies": {
+    "brain.js": "^1.6.1"
+  }
+}
