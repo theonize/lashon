@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/theonize/lashon#readme",
   "dependencies": {
-    "brain.js": "^1.6.1"
+    "brain.js": "^2.0.0-beta.2"
   }
 }
