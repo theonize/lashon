@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+train.ylt-linux
+train.ylt-linux
+train.ylt-macos
+train.ylt-win.exe
