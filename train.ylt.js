@@ -4,7 +4,8 @@ const netFile = './model.ylt.json'
 const textData = require('./ylt.json')
 
 const num_lines = 10
-const start_line = Math.floor(Math.random() * (31086 - num_lines))
+// const start_line = Math.floor(Math.random() * (31086 - num_lines))
+const start_line = 20000
 
 const end_line = start_line + num_lines
 const trainingData = textData.slice(start_line, end_line)
@@ -31,8 +32,6 @@ const result = lstm.train(trainingData, {
 
 fs.writeFileSync(netFile, JSON.stringify(lstm.toJSON()))
 
-
-const tests = ['The', 'Was', 'Had', 'Who', 'It',]
 
 for (let data of trainingData) {
   const testPhrase = data.split(' ')[0]
