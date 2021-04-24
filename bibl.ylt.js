@@ -7,43 +7,52 @@ const trainingData = require('./ylt.json')
 const net = new brain.recurrent.LSTM();
 
 const model = require('./model.ylt.json')
-net.fromJSON(model)
+// net.fromJSON(model)
 
-let num_lines = 3
-let training_subset = []
-let start_line = Math.floor(Math.random() * 31086)
+let num_lines = 10
+let num_sections = 100
 
-for (curr_line = start_line; curr_line < (start_line+num_lines); curr_line++) {
-	let line = trainingData[curr_line]
+for (let X = 0; X < num_sections; X++) {
+	let phrase_length = Math.floor(Math.random()*4)+3
+	let start_line = Math.floor(Math.random() * 31086)
+	let training_subset = []
+	
+	console.log(`training lines ${start_line} thru ${start_line+num_lines}`, training_subset)
 
-	line = line.split(' ')
+	for (let curr_line = start_line; curr_line < (start_line+num_lines); curr_line++) {
+		let line = trainingData[curr_line]
+		
+		line = line.split(' ')
+		
+		for (let I=0; I < line.length; I += phrase_length) {
+			let phrase = []
+			
+			for (let J=I; J < I+phrase_length; J++) {
+				phrase.push(line[J])
+			}
 
-	console.log(line)
-	for (let I=0; I < line.length; I += 3) {
-		let phrase = [line[I],line[I+1],line[I+2],line[I+3]]
-		phrase = phrase.join(' ')
+			phrase = phrase.join(' ')
+			
+			training_subset.push(phrase)
+		}
+		
+		try {
+			console.log(training_subset)
+	
+			net.train(training_subset, {
+				iterations: 1000,
+				errorThresh: 0.015,
+				log: (stats)=>{
+					process.stdout.write(`${stats}\r`)
+				},
+			})
 
-		training_subset.push(phrase)
+			fs.writeFileSync('./model.ylt.json', JSON.stringify(net.toJSON()))
+		} catch (error) {
+			console.error(error)		
+		}
 	}
 	
-	try {
-		net.train(training_subset, {
-			iterations: 1000,
-			errorThresh: 0.011,
-			log: (stats)=>{
-				console.info(stats)
-			},
-		})
-	} catch (error) {
-		console.error(error, training_subset)		
-	}
 }
-
-console.log(`training lines ${start_line} thru ${start_line+num_lines}`, training_subset)
-
-// console.log(net.run('He is'))
-// console.log(net.run('I was'))
-
-fs.writeFileSync('./model.ylt.json', JSON.stringify(net.toJSON()))
 
 console.timeEnd("net_train")
