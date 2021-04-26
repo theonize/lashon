@@ -1,1 +1,1 @@
-for i in {1..10}; do node train.ylt.js; done
+for i in {1..100}; do node train.ylt.js; done
